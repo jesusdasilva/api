@@ -58,8 +58,8 @@ class LoginController extends HelloworldController
         }
         $user = $this->userService->login($parameters["email"],$parameters["password"]);
 //
-        $this->loginService->create($user, "V1", $request->getClientIp(), $request->headers->get('User-Agent'), true);
+        $login = $this->loginService->create($user, "V1", $request->getClientIp(), $request->headers->get('User-Agent'), true);
 
-        return $this->buildSuccessResponse(Response::HTTP_CREATED, $user);
+        return $this->buildSuccessResponse(Response::HTTP_CREATED, ['message' => 'Connecté avec succès'], $user);
     }
 }
