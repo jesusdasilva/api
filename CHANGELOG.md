@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.1.0](https://github.com/helloworld-ynovlyon/api/compare/v1.0.0...v1.1.0) (2022-03-02)
+
+
+### Features
+
+* :sparkles: Add New Migration ([b3f07bd](https://github.com/helloworld-ynovlyon/api/commit/b3f07bd1a65692d18d331f6a65235c8f8754cef4))
+* add securityService and function ([6a19b37](https://github.com/helloworld-ynovlyon/api/commit/6a19b3727612ae3e9a8791263d2c615dc85ff9ee))
+* add statuable trait ([0f61c3e](https://github.com/helloworld-ynovlyon/api/commit/0f61c3e5e56d1302b55b8eda9c28be0257025c7e))
+* add update and delete to userService ([8146d61](https://github.com/helloworld-ynovlyon/api/commit/8146d61f877dd57857d93efd4bd91a68dd0cfe7d))
+* CRUD User ([27c419c](https://github.com/helloworld-ynovlyon/api/commit/27c419c12779b262fca058f9619fcb6993a18a05))
+* fix user entity ([8f1df7b](https://github.com/helloworld-ynovlyon/api/commit/8f1df7bf7e36c63e36da1503fea32f7cc4557f0a))
+* forget password ([95b7a1e](https://github.com/helloworld-ynovlyon/api/commit/95b7a1e09d15483009fbafb178f1697466b9e2b2))
+* mailing system ([9790320](https://github.com/helloworld-ynovlyon/api/commit/9790320022fb6d1a4ced6754315c35365cc624bd))
+* **sentry:** add sentry to project ([c1d5342](https://github.com/helloworld-ynovlyon/api/commit/c1d5342bcf08b5d964b7f8c259d0af2d7456c997))
+
+
+### Bug Fixes
+
+* application/json with inputBag return null on body request. ([74516ec](https://github.com/helloworld-ynovlyon/api/commit/74516ec26ab3ff252492b424cf57f98acc48135f))
+* fix different wording and type of Entity ([d716836](https://github.com/helloworld-ynovlyon/api/commit/d716836f58a13f458f0f6d9f0c95dba55b2dec56))
+* rebase master and fix userController ([31ecea2](https://github.com/helloworld-ynovlyon/api/commit/31ecea230a9347788cef11e4f0e7bedca8ebbec2))
+* remove /app/ in makefile ([ddffff1](https://github.com/helloworld-ynovlyon/api/commit/ddffff123a7157070abd902c60e8a4ec6b1fb23a))
+* script to deploy prod ([2ffb058](https://github.com/helloworld-ynovlyon/api/commit/2ffb0587d6669452fca84b768f9ee291aad2e5a5))
+
 ## 1.0.0 (2022-02-18)
 
 
