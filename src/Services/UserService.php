@@ -24,6 +24,7 @@ class UserService
         private EntityManagerInterface $em,
         private UserRepository $userRepository,
         private TextService $textService,
+        private MailerService $mailerService,
         private TokenRepository $tokenRepository,
     ) {
     }
@@ -61,6 +62,7 @@ class UserService
         $this->em->flush();
 
         $this->updatePassword($user, $password);
+        $this->mailerService->confirmationEmail($email, $user);
 
         return $user;
     }
@@ -111,7 +113,7 @@ class UserService
         $firstname = !empty($firstname) ? $this->textService->cleanFirstName($firstname) : null;
         $lastname = !empty($lastname) ? $this->textService->cleanLastName($lastname) : null;
 
-        $this->getExceptionToValidationCreateOrUpdateUser($email, $username, $birthdate, $password, $user);
+        $this->getExceptionToValidationCreateOrUpdateUser($email, $username, $birthdate, null, $user);
 
         $user
             ->setEmail($email)
@@ -135,7 +137,7 @@ class UserService
             throw new RuntimeException('L\'utilisateur est déjà supprimé');
         }
 
-        if (in_array(User::RANK_ADMIN, $loggedUser->getRoles(), true)) {
+        if (in_array(User::ROLE_ADMIN, $loggedUser->getRoles(), true)) {
             $user->setStatus(User::STATUS_BANNED);
         } else {
             $user->setStatus(User::STATUS_DELETED);

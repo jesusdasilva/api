@@ -58,7 +58,7 @@ class TravelController extends HelloworldController
             'isSharable' => [new Type(['type' => 'bool']), new NotBlank()],
         ]);
 
-        if (!empty($errors)) {
+        if (null !== $errors) {
             return $errors;
         }
 

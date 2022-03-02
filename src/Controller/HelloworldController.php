@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Services\RequestService;
 use App\Services\ResponseService;
-use JsonException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -35,18 +35,18 @@ abstract class HelloworldController extends AbstractController
      */
     public function getLoggedUser(): ?User
     {
-        $user = parent::getUser();
+        $user = $this->getUser();
 
-        // No user
-        if (empty($user) || !($user instanceof User)) {
+        if (!$user instanceof User) {
             return null;
         }
 
+        // No user
         return $user;
     }
 
     /**
-     * @throws JsonException
+     * @throws \JsonException
      */
     public function getParameters(Request $request)
     {

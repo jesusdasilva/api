@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Services\RequestService;
 use App\Services\ResponseService;
 use App\Services\SecurityService;
 use App\Services\UserService;
 use Exception;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -67,10 +67,9 @@ class UserController extends HelloworldController
     public function getAllAction(): JsonResponse
     {
         $loggedUser = $this->getLoggedUser();
-        $roles = $loggedUser->getRoles();
 
         // No logged used
-        if (null === $loggedUser) || ($this->securityService->isSameUser($loggedUser, $uuid) && !$this->securityService->isAdmin($loggedUser))) {
+        if (null === $loggedUser || !$this->securityService->isAdmin($loggedUser)) {
             return $this->responseService->error403('auth.unauthorized', 'Vous n\'êtes pas autorisé à effectué cette action');
         }
 
@@ -97,7 +96,7 @@ class UserController extends HelloworldController
         ]);
 
         // Validation errors
-        if (!empty($errors)) {
+        if (null !== $errors) {
             return $errors;
         }
 
@@ -127,12 +126,12 @@ class UserController extends HelloworldController
 
         $user = $this->userRepository->findOneByUuid($uuid);
 
-        if (empty($user)) {
-            throw new Exception('L\'utilisateur est introuvable');
+        if (null === $user) {
+            throw new RuntimeException('L\'utilisateur est introuvable');
         }
 
         // No logged used
-        if (empty($loggedUser) || ($this->securityService->isSameUser($loggedUser, $uuid) && !$this->securityService->isAdmin($loggedUser))) {
+        if (null === $loggedUser || ($this->securityService->isSameUser($loggedUser, $uuid) && !$this->securityService->isAdmin($loggedUser))) {
             return $this->responseService->error403('auth.unauthorized', 'Vous n\'êtes pas autorisé à effectué cette action');
         }
 
@@ -150,17 +149,16 @@ class UserController extends HelloworldController
     public function userUpdate(Request $request, string $uuid): JsonResponse
     {
         $loggedUser = $this->getLoggedUser();
-        $roles = $loggedUser->getRoles();
 
         // No logged used
-        if (empty($loggedUser) || ($this->securityService->isSameUser($loggedUser, $uuid) && !$this->securityService->isAdmin($loggedUser))) {
+        if (null === $loggedUser || ($this->securityService->isSameUser($loggedUser, $uuid) && !$this->securityService->isAdmin($loggedUser))) {
             return $this->responseService->error403('auth.unauthorized', 'Vous n\'êtes pas autorisé à effectué cette action');
         }
 
         $user = $this->userRepository->findOneBy($uuid);
 
-        if (empty($user)) {
-            throw new Exception('L\'utilisateur n\'a pas été trouvé');
+        if (null === $user) {
+            throw new RuntimeException('L\'utilisateur n\'a pas été trouvé');
         }
 
         $errors = $this->validate($request->request->all(), [
@@ -174,7 +172,7 @@ class UserController extends HelloworldController
         ]);
 
         // Validation errors
-        if (!empty($errors)) {
+        if (null !== $errors) {
             return $errors;
         }
 

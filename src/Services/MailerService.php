@@ -6,6 +6,7 @@ use App\Entity\Token;
 use App\Entity\User;
 use DateTime;
 use Exception;
+use RuntimeException;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -79,7 +80,7 @@ class MailerService
         try {
             $this->mailer->send($email);
         } catch (TransportExceptionInterface $e) {
-            throw new Exception($e);
+            throw new RuntimeException($e);
         }
     }
 }

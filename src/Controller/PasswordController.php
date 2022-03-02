@@ -10,6 +10,7 @@ use App\Services\ResponseService;
 use App\Services\TokenService;
 use App\Services\UserService;
 use Exception;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -53,14 +54,14 @@ class PasswordController extends HelloworldController
             'password' => [new Type(['type' => 'string']), new NotBlank()],
         ]);
 
-        if (!empty($errors)) {
+        if (null !== $errors) {
             return $errors;
         }
 
         $validToken = $this->tokenRepository->findOneByValue($token);
 
         if (null === $validToken) {
-            throw new Exception('Invalid token');
+            throw new RuntimeException('Invalid token');
         }
 
         $user = $this->userService->getUserByToken($validToken);
@@ -85,7 +86,7 @@ class PasswordController extends HelloworldController
             'email' => [new Type(['type' => 'string']), new NotBlank()],
         ]);
 
-        if (!empty($errors)) {
+        if (null !== $errors) {
             return $errors;
         }
 
