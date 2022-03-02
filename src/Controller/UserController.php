@@ -26,7 +26,6 @@ class UserController extends HelloworldController
 {
     // ------------------------------ >
 
-
     public function __construct(
         ResponseService $responseService,
         RequestService $requestService,
@@ -52,7 +51,7 @@ class UserController extends HelloworldController
         $loggedUser = $this->getLoggedUser();
 
         // No logged user
-        if (empty($loggedUser)) {
+        if (null === $loggedUser) {
             return $this->responseService->error403('auth.unauthorized', 'Vous n\'êtes pas autorisé à effectué cette action');
         }
 
@@ -71,7 +70,7 @@ class UserController extends HelloworldController
         $roles = $loggedUser->getRoles();
 
         // No logged used
-        if (empty($loggedUser) || in_array(User::ROLE_ADMIN, $roles, true)) {
+        if (null === $loggedUser) || ($this->securityService->isSameUser($loggedUser, $uuid) && !$this->securityService->isAdmin($loggedUser))) {
             return $this->responseService->error403('auth.unauthorized', 'Vous n\'êtes pas autorisé à effectué cette action');
         }
 

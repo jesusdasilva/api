@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Services\RequestService;
 use App\Services\ResponseService;
+use JsonException;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -41,5 +43,13 @@ abstract class HelloworldController extends AbstractController
         }
 
         return $user;
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public function getParameters(Request $request)
+    {
+        return json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
     }
 }

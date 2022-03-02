@@ -41,16 +41,12 @@ class TravelController extends HelloworldController
      */
     public function addAction(Request $request): Response
     {
-        //TODO move it to AbstractController
-        $content = $request->getContent();
-        $parameters = json_decode($content, true);
-
+        $parameters = $this->getParameters($request);
         $loggedUser = $this->getLoggedUser();
 
         // No logged user
         if (null === $loggedUser) {
-            //FIXME remove // when front is ready
-            // return $this->responseService->error403('auth.unauthorized', 'Vous n\'êtes pas autorisé à effectué cette action');
+            return $this->responseService->error403('auth.unauthorized', 'Vous n\'êtes pas autorisé à effectué cette action');
         }
 
         $errors = $this->validate($parameters, [
